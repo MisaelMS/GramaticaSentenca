@@ -14,7 +14,7 @@ class Derivacao {
       let atual = pilha.pop();
       console.log('atual:', atual);
       
-      if (this.gramatica.terminais.includes(atual)) {
+      if (this.gramatica.terminais.includes(atual) || atual === 'ε') {
         continue;
       } else if (this.gramatica.naoTerminais.includes(atual)) {
         const producao = this.gramatica.producao[atual];
@@ -33,8 +33,12 @@ class Derivacao {
         
         console.log('producaoAleatoria:', producaoAleatoria);
 
-        sentenca = sentenca.replace(atual, producaoAleatoria); //Troca o atual pela produção escolhida aleatoriamente
-
+        if (producaoAleatoria === 'ε') {
+          console.log('entrou', atual)
+          sentenca = sentenca.replace(atual, ''); //Troca o atual pela produção escolhida aleatoriamente
+        } else {
+          sentenca = sentenca.replace(atual, producaoAleatoria); //Troca o atual pela produção escolhida aleatoriamente
+        }
         console.log('sentenca:', sentenca);
         
         for (let i = producaoAleatoria.length - 1; i >= 0; i--) {
